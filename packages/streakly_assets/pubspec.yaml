@@ -1,0 +1,24 @@
+name: streakly_assets
+description: Shared icons, images, and fonts for the Streakly app.
+version: 0.1.0
+publish_to: "none"
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+flutter:
+  assets:
+    - assets/icons/ic_welcome_stars.svg
+    - assets/images/
+
+  # Add font files under fonts/, then register families here, for example:
+  # fonts:
+  #   - family: StreaklyDisplay
+  #     fonts:
+  #       - asset: fonts/StreaklyDisplay-Regular.ttf
+  #       - asset: fonts/StreaklyDisplay-Bold.ttf
+  #         weight: 700
