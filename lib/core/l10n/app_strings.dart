@@ -53,21 +53,28 @@ abstract final class SetupStrings {
 abstract final class NotificationsStrings {
   NotificationsStrings._();
 
-  static const eyebrow = 'REMINDERS';
-  static const title = 'Stay gently on track';
-  static const subtitle =
-      'Enable notifications to get calm nudges for your micro habits. '
-      'You’re always in control.';
-  static const cardTitle = 'Micro reminders';
-  static const cardExample = 'Example: “Drink Water — protect your streak.”';
-  static const enable = 'Enable Notifications →';
+  /// Figma “Notifications Permission” — [Login-Page--Community](https://www.figma.com/design/i1gV0yG1KlO7vl982pCVq1/Login-Page--Community-?node-id=191-206)
+  static const headlineLine1 = 'Stay consistent.';
+  static const headlineLine2 = 'Reminders that care.';
+  static const subtitleLine1 = 'We’ll remind you when it’s time to';
+  static const subtitleLine2 = 'check in, so your progress never';
+  static const subtitleLine3 = 'skips a beat.';
+  static const mindsetLabel = 'MINDSET';
+  static const mindsetBody = 'Gentle nudges, no pressure.';
+  static const reliabilityLabel = 'RELIABILITY';
+  static const reliabilityBody = 'Keep your streaks protected.';
+  static const enable = 'Enable Notifications';
+  static const later = 'Later';
+  static const footerMark = 'STREAKLY';
 }
 
 abstract final class InsuranceStrings {
   InsuranceStrings._();
 
   static const eyebrow = 'STREAK PROTECTION';
-  static const title = 'Missed a day? Save your streak.';
+  static const titleLine1 = 'Missed a day?';
+  static const titleLine2 = 'Save your streak.';
+  static const primaryCta = 'Finish Setup';
   static const subtitle =
       'Everyone slips. Streak Insurance helps you recover without losing '
       'motivation — because consistency is returning, not perfection.';
