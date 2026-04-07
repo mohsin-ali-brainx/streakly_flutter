@@ -94,27 +94,57 @@ abstract final class TodayStrings {
   TodayStrings._();
 
   static const title = 'Today';
-  static const placeholder =
-      'Next: habits list + 1-tap check-ins + missed-day insurance banner.';
+  static const subtitle =
+      'Tap a habit to edit it. Use the circle to mark done for today.';
+  static const toggleDoneTooltip = 'Mark done for today';
+  static const emptyTitle = 'No habits yet';
+  static const emptyBody =
+      'Finish onboarding to add starter habits, or open Habits to add more.';
   static const insuranceCard =
       'You missed yesterday. Save your streak with Insurance.';
   static const useInsurance = 'Use';
+  static const tokensThisMonth = 'tokens left this month';
+
+  static String streakLine(int current) {
+    if (current <= 0) return 'Start your streak today';
+    if (current == 1) return '1 day streak';
+    return '$current day streak';
+  }
 }
 
 abstract final class HabitsStrings {
   HabitsStrings._();
 
   static const title = 'Habits';
-  static const placeholder =
-      'Next: create/edit habit (name, icon, reminder) and list of habits.';
+  static const subtitle = 'Your active micro habits.';
+  static const reorderHint = 'Long-press and drag to reorder.';
+  static const empty = 'No habits yet — finish setup or add one below.';
   static const addHabit = 'Add micro habit';
+  static const reminderOn = 'Reminder on';
+  static const reminderOff = 'No reminder';
+  static const addTitle = 'New habit';
+  static const editTitle = 'Edit habit';
+  static const nameLabel = 'Name';
+  static const iconLabel = 'Icon';
+  static const reminderSwitch = 'Daily reminder';
+  static const pickTime = 'Change time';
+  static const save = 'Save';
+  static const archiveHabit = 'Archive habit';
+  static const archiveTitle = 'Archive this habit?';
+  static const archiveBody =
+      'It will disappear from Today and Habits. Your past check-ins stay in history.';
+  static const archiveConfirm = 'Archive';
 }
 
 abstract final class StatsStrings {
   StatsStrings._();
 
   static const title = 'Stats';
-  static const placeholder = 'Next: weekly completion + streak highlights.';
+  static const subtitle = 'A quick snapshot of your momentum.';
+  static const activeHabits = 'Active habits';
+  static const doneToday = 'Done today';
+  static const placeholder =
+      'Weekly charts and streak highlights can build on this next.';
 }
 
 abstract final class SettingsStrings {

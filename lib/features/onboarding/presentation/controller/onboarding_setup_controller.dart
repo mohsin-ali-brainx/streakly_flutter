@@ -3,14 +3,15 @@ import 'package:flutter/foundation.dart';
 import '../../../../core/prefs/domain/app_prefs_repository.dart';
 import '../../../../di/service_locator.dart';
 import '../../../habits/domain/repositories/habits_repository.dart';
+import '../../../notifications/data/habit_reminder_scheduler.dart';
 import '../../domain/starter_habit_template.dart';
 
 class OnboardingSetupController extends ChangeNotifier {
   OnboardingSetupController({
     HabitsRepository? habitsRepository,
     AppPrefsRepository? prefsRepository,
-  })  : _habitsRepository = habitsRepository ?? sl<HabitsRepository>(),
-        _prefsRepository = prefsRepository ?? sl<AppPrefsRepository>();
+  }) : _habitsRepository = habitsRepository ?? sl<HabitsRepository>(),
+       _prefsRepository = prefsRepository ?? sl<AppPrefsRepository>();
 
   final HabitsRepository _habitsRepository;
   final AppPrefsRepository _prefsRepository;
@@ -40,10 +41,7 @@ class OnboardingSetupController extends ChangeNotifier {
 
   /// Adds a user-defined habit and selects it. [subtitle] is optional; a
   /// default is used when empty.
-  void addCustomHabit({
-    required String title,
-    String? subtitle,
-  }) {
+  void addCustomHabit({required String title, String? subtitle}) {
     if (_submitting) return;
     final trimmed = title.trim();
     if (trimmed.isEmpty) return;
@@ -89,14 +87,17 @@ class OnboardingSetupController extends ChangeNotifier {
       final selected = [...builtIn, ...custom];
 
       // Ensure at least 1 habit exists; if user deselected all, add one default.
-      final safeSelected =
-          selected.isEmpty ? [kStarterTemplates.first] : selected;
+      final safeSelected = selected.isEmpty
+          ? [kStarterTemplates.first]
+          : selected;
 
+      final reminders = sl<HabitReminderScheduler>();
       for (final t in safeSelected) {
-        await _habitsRepository.createHabit(
+        final created = await _habitsRepository.createHabit(
           name: t.title,
           iconKey: t.iconKey,
         );
+        await reminders.syncFromHabit(created);
       }
 
       await _prefsRepository.setStarterHabitsCreated(true);
@@ -106,4 +107,3 @@ class OnboardingSetupController extends ChangeNotifier {
     }
   }
 }
-

@@ -15,5 +15,10 @@ abstract class HabitStatusRepository {
     required String dayKey,
     required HabitDayCompletionStatus status,
   });
-}
 
+  /// Remove today's row so the habit shows as not yet done (toggle off).
+  Future<void> deleteStatusForDay({
+    required int habitId,
+    required String dayKey,
+  });
+}

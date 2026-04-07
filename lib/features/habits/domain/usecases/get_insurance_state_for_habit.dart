@@ -26,9 +26,13 @@ class GetInsuranceStateForHabit {
     final monthKey = MonthKey.of(localNow);
 
     final statuses = await _statusRepo.getStatusesForHabit(habitId);
-    final eligible =
-        StreakCalculator.canUseInsuranceForYesterday(todayKey: todayKey, statuses: statuses);
-    final remaining = await _insuranceRepo.getRemainingTokens(monthKey: monthKey);
+    final eligible = StreakCalculator.canUseInsuranceForYesterday(
+      todayKey: todayKey,
+      statuses: statuses,
+    );
+    final remaining = await _insuranceRepo.getRemainingTokens(
+      monthKey: monthKey,
+    );
 
     return InsuranceState(
       eligibleForYesterday: eligible && remaining > 0,
@@ -36,4 +40,3 @@ class GetInsuranceStateForHabit {
     );
   }
 }
-

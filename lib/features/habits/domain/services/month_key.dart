@@ -6,4 +6,3 @@ class MonthKey {
     return DateFormat('yyyy-MM').format(DateTime(local.year, local.month));
   }
 }
-

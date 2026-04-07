@@ -2,10 +2,7 @@ import '../../../../core/time/local_day.dart';
 import '../entities/habit_day_status.dart';
 
 class StreakSummary {
-  const StreakSummary({
-    required this.current,
-    required this.best,
-  });
+  const StreakSummary({required this.current, required this.best});
 
   final int current;
   final int best;
@@ -45,11 +42,12 @@ class StreakCalculator {
     }
 
     // Best streak: walk over effective-done days sorted ascending by date.
-    final effectiveDays = statuses
-        .where((s) => _isEffectiveDone(s.status))
-        .map((s) => LocalDay.parseDayKey(s.dayKey))
-        .toList()
-      ..sort((a, b) => a.compareTo(b));
+    final effectiveDays =
+        statuses
+            .where((s) => _isEffectiveDone(s.status))
+            .map((s) => LocalDay.parseDayKey(s.dayKey))
+            .toList()
+          ..sort((a, b) => a.compareTo(b));
 
     int best = 0;
     int run = 0;
@@ -97,4 +95,3 @@ class StreakCalculator {
     return true;
   }
 }
-

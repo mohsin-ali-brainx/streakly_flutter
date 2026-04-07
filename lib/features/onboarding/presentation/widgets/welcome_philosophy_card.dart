@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:streakly_assets/streakly_assets.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_dimens.dart';
@@ -34,8 +33,7 @@ class WelcomePhilosophyCard extends StatelessWidget {
             top: 18,
             right: 18,
             child: SvgPicture.asset(
-              StreaklyIcons.icWelcomeStars,
-              package: kStreaklyAssetsPackage,
+              'assets/icons/ic_welcome_stars.svg',
               height: 14,
               fit: BoxFit.contain,
             ),

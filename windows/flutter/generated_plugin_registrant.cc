@@ -6,9 +6,9 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <isar_flutter_libs/isar_flutter_libs_plugin.h>
+#include <flutter_timezone/flutter_timezone_plugin_c_api.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
-  IsarFlutterLibsPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("IsarFlutterLibsPlugin"));
+  FlutterTimezonePluginCApiRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FlutterTimezonePluginCApi"));
 }

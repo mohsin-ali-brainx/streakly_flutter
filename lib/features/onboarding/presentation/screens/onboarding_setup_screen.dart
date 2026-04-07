@@ -9,6 +9,7 @@ import '../../../../core/l10n/app_strings.dart';
 import '../../../../shared/presentation/widgets/onboarding_eyebrow_text.dart';
 import '../../../../shared/presentation/widgets/onboarding_progress_header.dart';
 import '../../../../shared/presentation/widgets/streakly_primary_async_button.dart';
+import '../../../habits/presentation/widgets/habit_emoji_badge.dart';
 import '../../domain/starter_habit_template.dart';
 import '../controller/onboarding_setup_controller.dart';
 import '../widgets/template_card.dart';
@@ -27,18 +28,6 @@ class OnboardingSetupScreen extends StatelessWidget {
 
 class _OnboardingSetupView extends StatelessWidget {
   const _OnboardingSetupView();
-
-  Widget _iconForKey(String key) {
-    return Text(switch (key) {
-      'read' => '📖',
-      'water' => '💧',
-      'meditate' => '🧘',
-      'walk' => '🚶',
-      'journal' => '✍️',
-      'custom' => '✨',
-      _ => '✨',
-    }, style: const TextStyle(fontSize: 18));
-  }
 
   Future<void> _showAddCustomHabitDialog(
     BuildContext context,
@@ -171,7 +160,7 @@ class _OnboardingSetupView extends StatelessWidget {
                               TemplateCard(
                                 title: t.title,
                                 subtitle: t.subtitle,
-                                leading: _iconForKey(t.iconKey),
+                                leading: HabitEmojiBadge(iconKey: t.iconKey),
                                 selected: selected,
                                 onTap: () => c.toggle(t.id),
                               ),
@@ -208,7 +197,7 @@ class _OnboardingSetupView extends StatelessWidget {
                         return TemplateCard(
                           title: t.title,
                           subtitle: t.subtitle,
-                          leading: _iconForKey(t.iconKey),
+                          leading: HabitEmojiBadge(iconKey: t.iconKey),
                           selected: selected,
                           onTap: () => c.toggle(t.id),
                         );

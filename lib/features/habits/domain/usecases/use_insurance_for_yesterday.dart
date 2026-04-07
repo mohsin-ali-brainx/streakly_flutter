@@ -17,7 +17,9 @@ class UseInsuranceForYesterday {
     final todayKey = LocalDay.dayKey(today);
     final monthKey = MonthKey.of(localNow);
 
-    final remaining = await _insuranceRepo.getRemainingTokens(monthKey: monthKey);
+    final remaining = await _insuranceRepo.getRemainingTokens(
+      monthKey: monthKey,
+    );
     if (remaining <= 0) return false;
 
     final statuses = await _statusRepo.getStatusesForHabit(habitId);
@@ -27,7 +29,9 @@ class UseInsuranceForYesterday {
     );
     if (!eligible) return false;
 
-    final yesterdayKey = LocalDay.dayKey(today.subtract(const Duration(days: 1)));
+    final yesterdayKey = LocalDay.dayKey(
+      today.subtract(const Duration(days: 1)),
+    );
 
     await _insuranceRepo.consumeToken(monthKey: monthKey);
     await _statusRepo.setStatus(
@@ -38,4 +42,3 @@ class UseInsuranceForYesterday {
     return true;
   }
 }
-

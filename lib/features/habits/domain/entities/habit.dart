@@ -4,6 +4,7 @@ class Habit {
     required this.name,
     required this.iconKey,
     required this.createdAt,
+    required this.sortOrder,
     required this.reminderEnabled,
     this.reminderTimeMinutes,
     required this.archived,
@@ -17,6 +18,8 @@ class Habit {
 
   final DateTime createdAt;
 
+  final int sortOrder;
+
   final bool reminderEnabled;
 
   /// Minutes since midnight local time (0..1439). Null when disabled.
@@ -24,4 +27,3 @@ class Habit {
 
   final bool archived;
 }
-

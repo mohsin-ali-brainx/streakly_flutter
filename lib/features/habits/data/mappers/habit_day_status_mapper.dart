@@ -1,44 +1,32 @@
 import '../../domain/entities/habit_day_status.dart';
-import '../isar/isar_habit_day_status.dart';
 
-HabitDayCompletionStatus _toDomainStatus(IsarHabitDayCompletionStatus s) {
-  return switch (s) {
-    IsarHabitDayCompletionStatus.done => HabitDayCompletionStatus.done,
-    IsarHabitDayCompletionStatus.missed => HabitDayCompletionStatus.missed,
-    IsarHabitDayCompletionStatus.insured => HabitDayCompletionStatus.insured,
+const int kStatusDone = 0;
+const int kStatusMissed = 1;
+const int kStatusInsured = 2;
+
+int habitCompletionStatusToInt(HabitDayCompletionStatus status) {
+  return switch (status) {
+    HabitDayCompletionStatus.done => kStatusDone,
+    HabitDayCompletionStatus.missed => kStatusMissed,
+    HabitDayCompletionStatus.insured => kStatusInsured,
   };
 }
 
-IsarHabitDayCompletionStatus _toIsarStatus(HabitDayCompletionStatus s) {
-  return switch (s) {
-    HabitDayCompletionStatus.done => IsarHabitDayCompletionStatus.done,
-    HabitDayCompletionStatus.missed => IsarHabitDayCompletionStatus.missed,
-    HabitDayCompletionStatus.insured => IsarHabitDayCompletionStatus.insured,
+HabitDayCompletionStatus habitCompletionStatusFromInt(int value) {
+  return switch (value) {
+    kStatusDone => HabitDayCompletionStatus.done,
+    kStatusMissed => HabitDayCompletionStatus.missed,
+    kStatusInsured => HabitDayCompletionStatus.insured,
+    _ => HabitDayCompletionStatus.done,
   };
 }
 
-extension HabitDayStatusToDomain on IsarHabitDayStatus {
-  HabitDayStatus toDomain() {
-    return HabitDayStatus(
-      id: id,
-      habitId: habitId,
-      dayKey: dayKey,
-      status: _toDomainStatus(status),
-      updatedAt: updatedAt,
-    );
-  }
+HabitDayStatus habitDayStatusFromRow(Map<String, Object?> row) {
+  return HabitDayStatus(
+    id: row['id'] as int,
+    habitId: row['habit_id'] as int,
+    dayKey: row['day_key'] as String,
+    status: habitCompletionStatusFromInt(row['status'] as int),
+    updatedAt: DateTime.parse(row['updated_at'] as String),
+  );
 }
-
-extension HabitDayStatusToIsar on HabitDayStatus {
-  IsarHabitDayStatus toIsar() {
-    final s = IsarHabitDayStatus()
-      ..id = id
-      ..habitId = habitId
-      ..dayKey = dayKey
-      ..status = _toIsarStatus(status)
-      ..updatedAt = updatedAt
-      ..habitIdDayKey = '$habitId|$dayKey';
-    return s;
-  }
-}
-

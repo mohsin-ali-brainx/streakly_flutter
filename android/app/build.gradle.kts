@@ -8,8 +8,10 @@ plugins {
 android {
     namespace = "com.example.streakly_app.streakly_app_flutter"
     compileSdk = flutter.compileSdkVersion
-    // Align with plugins (flutter_local_notifications, path_provider, isar_flutter_libs).
-    ndkVersion = "27.0.12077973"
+    // Latest stable NDK (r29) — 16 KB page-size friendly defaults for app-built native code.
+    // Install via Android Studio: SDK Manager → SDK Tools → NDK (Side by side) → 29.0.14206865
+    // https://developer.android.com/ndk/downloads
+    ndkVersion = "29.0.14206865"
 
     compileOptions {
         isCoreLibraryDesugaringEnabled = true

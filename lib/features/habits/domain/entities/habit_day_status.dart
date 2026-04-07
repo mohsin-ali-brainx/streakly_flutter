@@ -1,8 +1,4 @@
-enum HabitDayCompletionStatus {
-  done,
-  missed,
-  insured,
-}
+enum HabitDayCompletionStatus { done, missed, insured }
 
 class HabitDayStatus {
   const HabitDayStatus({
@@ -22,4 +18,3 @@ class HabitDayStatus {
   final HabitDayCompletionStatus status;
   final DateTime updatedAt;
 }
-
