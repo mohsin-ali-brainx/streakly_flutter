@@ -71,7 +71,12 @@ class HabitReminderScheduler {
     await _plugin.cancel(habitId);
   }
 
-  /// Cancels any existing schedule for [habit], then schedules if enabled.
+  Future<void> syncAllActiveHabits(Iterable<Habit> habits) async {
+    for (final h in habits) {
+      await syncFromHabit(h);
+    }
+  }
+
   Future<void> syncFromHabit(Habit habit) async {
     await cancel(habit.id);
     if (!habit.reminderEnabled || habit.reminderTimeMinutes == null) return;

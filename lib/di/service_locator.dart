@@ -14,10 +14,11 @@ import '../features/habits/domain/repositories/insurance_repository.dart';
 import '../features/habits/domain/usecases/get_habit_streaks.dart';
 import '../features/habits/domain/usecases/get_insurance_state_for_habit.dart';
 import '../features/habits/domain/usecases/use_insurance_for_yesterday.dart';
-import '../features/notifications/data/flutter_local_notifications_permission_service.dart';
 import '../features/notifications/data/habit_reminder_scheduler.dart';
+import '../features/notifications/data/permission_handler_notifications_permission_service.dart';
 import '../features/notifications/domain/notifications_permission_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import '../app/theme_mode_controller.dart';
 
 final GetIt sl = GetIt.instance;
 
@@ -36,6 +37,8 @@ Future<void> setupServiceLocator() async {
     () => SharedPrefsAppPrefsRepository(sl()),
   );
 
+  sl.registerSingleton<ThemeModeController>(ThemeModeController(sl()));
+
   sl.registerLazySingleton<HabitsRepository>(() => SqliteHabitsRepository(sl()));
   sl.registerLazySingleton<HabitStatusRepository>(
     () => SqliteHabitStatusRepository(sl()),
@@ -51,7 +54,7 @@ Future<void> setupServiceLocator() async {
   // Don’t schedule notifications from DI: platform channels are safer after the first frame.
 
   sl.registerLazySingleton<NotificationsPermissionService>(
-    () => FlutterLocalNotificationsPermissionService(sl()),
+    () => PermissionHandlerNotificationsPermissionService(),
   );
 
   sl.registerFactory(() => GetHabitStreaks(sl()));

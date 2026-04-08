@@ -41,4 +41,48 @@ abstract final class AppColors {
   /// Third accent row on onboarding insurance card (warm circle).
   static const Color onboardingInsuranceFeatureCircle =
       Color(0xFFFFE8DD);
+
+  // —— Habits list & create / edit sheet (Figma habit UI ~191:432, ~191:601) ——
+  static const Color habitsScreenBg = Color(0xFFFBF9F4);
+  static const Color habitsTitleInk = Color(0xFF1B1C19);
+  static const Color habitsBodyBrown = Color(0xFF53433E);
+  static const Color habitsMuted = Color(0xFF85736D);
+  static const Color habitsCardTint = Color(0xFFF5F3EE);
+  /// rgba(164, 100, 77, 0.10)
+  static const Color habitsIconWellFill = Color(0x1AA4644D);
+  static const Color habitsPrimaryCta = Color(0xFF874C36);
+  /// rgba(186, 26, 26, 0.70)
+  static const Color habitsArchiveInk = Color(0xB3BA1A1A);
+
+  // —— Today tab (Figma ~191:255, same file as Habits / habit detail) ——
+  static const Color todayScreenBg = habitsScreenBg;
+  static const Color todayTealDone = Color(0xFF1A6660);
+  static const Color todayCheckRing = Color(0xFFD8C2BB);
+  static const Color todayInsuranceCardBg = Color(0xFFE4E2DD);
+  /// rgba(216, 194, 187, 0.15)
+  static const Color todayInsuranceBorder = Color(0x26D8C2BB);
+
+  static const Color bottomNavBarBg = Color(0xFFFFFFFF);
+  static const Color bottomNavInactive = Color(0xFFD8C2BB);
+
+  static const Color todayProgressCardBg = Color(0xFFF3EEE6);
+  static const Color todayInsuranceCardGrey = Color(0xFFE8E6E1);
+  static const Color todayInsightMint = Color(0xFFE4EFE4);
+  static const Color todayHabitDoneGreen = Color(0xFF2D5A47);
+  static const Color todayWellMeditate = Color(0xFFE4EDE4);
+  static const Color todayWellRead = Color(0xFFFFF2E8);
+  static const Color todayWellWalk = Color(0xFFEAE8E6);
+  static const Color todayWellWater = Color(0xFFE3F2FA);
+  static const Color todayWellJournal = Color(0xFFF0EBFA);
+
+  static const Color statsLongestStreakBg = Color(0xFF4E342E);
+  static const Color statsDiversityCardBg = Color(0xFFF0EDE8);
+  static const Color statsConsistencyBg = Color(0xFF1A5A52);
+  static const Color statsWeeklyLegendMuted = Color(0xFFE8E4DE);
+
+  static const Color habitEditorScreenBg = Color(0xFFFDFBF7);
+  static const Color visualAnchorCardBg = Color(0xFFF7F4F0);
+  static const Color visualAnchorInactiveWell = Color(0xFFE8E6E1);
+  static const Color visualAnchorSelected = Color(0xFF7D523F);
+  static const Color visualAnchorIconBrown = Color(0xFF5C4D42);
 }

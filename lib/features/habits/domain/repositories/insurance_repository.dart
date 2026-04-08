@@ -5,4 +5,6 @@ abstract class InsuranceRepository {
 
   /// Consumes 1 token for the given month.
   Future<void> consumeToken({required String monthKey});
+
+  Future<int> getTotalTokensConsumed();
 }

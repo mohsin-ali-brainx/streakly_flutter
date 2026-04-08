@@ -22,6 +22,16 @@ class SqliteInsuranceRepository implements InsuranceRepository {
   }
 
   @override
+  Future<int> getTotalTokensConsumed() async {
+    final rows = await _db.database.rawQuery(
+      'SELECT SUM(tokens_used) AS t FROM insurance_ledger',
+    );
+    final v = rows.single['t'];
+    if (v == null) return 0;
+    return (v as num).toInt();
+  }
+
+  @override
   Future<void> consumeToken({required String monthKey}) async {
     await _db.database.transaction((txn) async {
       final rows = await txn.query(

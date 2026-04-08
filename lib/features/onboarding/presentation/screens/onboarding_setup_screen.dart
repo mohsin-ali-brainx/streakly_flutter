@@ -9,7 +9,7 @@ import '../../../../core/l10n/app_strings.dart';
 import '../../../../shared/presentation/widgets/onboarding_eyebrow_text.dart';
 import '../../../../shared/presentation/widgets/onboarding_progress_header.dart';
 import '../../../../shared/presentation/widgets/streakly_primary_async_button.dart';
-import '../../../habits/presentation/widgets/habit_emoji_badge.dart';
+import '../../../habits/presentation/widgets/habit_icon.dart';
 import '../../domain/starter_habit_template.dart';
 import '../controller/onboarding_setup_controller.dart';
 import '../widgets/template_card.dart';
@@ -160,7 +160,7 @@ class _OnboardingSetupView extends StatelessWidget {
                               TemplateCard(
                                 title: t.title,
                                 subtitle: t.subtitle,
-                                leading: HabitEmojiBadge(iconKey: t.iconKey),
+                                leading: HabitIcon(iconKey: t.iconKey, size: 20),
                                 selected: selected,
                                 onTap: () => c.toggle(t.id),
                               ),
@@ -197,7 +197,7 @@ class _OnboardingSetupView extends StatelessWidget {
                         return TemplateCard(
                           title: t.title,
                           subtitle: t.subtitle,
-                          leading: HabitEmojiBadge(iconKey: t.iconKey),
+                          leading: HabitIcon(iconKey: t.iconKey, size: 20),
                           selected: selected,
                           onTap: () => c.toggle(t.id),
                         );

@@ -1,4 +1,5 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:permission_handler/permission_handler.dart' as ph;
 
 import '../domain/notifications_permission_service.dart';
 
@@ -44,6 +45,11 @@ class FlutterLocalNotificationsPermissionService
 
     // Other platforms: treat as enabled.
     return true;
+  }
+
+  @override
+  Future<void> openAppSettings() async {
+    await ph.openAppSettings();
   }
 }
 

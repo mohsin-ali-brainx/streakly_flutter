@@ -4,15 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../core/constants/app_routes.dart';
+import 'widgets/streakly_bottom_nav_bar.dart';
 import '../core/prefs/domain/app_prefs_repository.dart';
 import '../di/service_locator.dart';
 import '../features/habits/presentation/screens/habits_screen.dart';
+import '../features/habits/presentation/screens/habit_detail_screen.dart';
+import '../features/habits/presentation/screens/habit_editor_screen.dart';
+import '../features/habits/presentation/screens/streak_recovery_screen.dart';
 import '../features/habits/presentation/screens/today_screen.dart';
+import '../features/habits/domain/entities/habit.dart';
 import '../features/onboarding/presentation/screens/onboarding_insurance_screen.dart';
 import '../features/onboarding/presentation/screens/onboarding_notifications_screen.dart';
 import '../features/onboarding/presentation/screens/onboarding_setup_screen.dart';
 import '../features/onboarding/presentation/screens/onboarding_welcome_screen.dart';
 import '../features/onboarding/presentation/screens/splash_screen.dart';
+import '../features/settings/presentation/screens/notifications_settings_screen.dart';
+import '../features/settings/presentation/screens/insurance_settings_screen.dart';
 import '../features/settings/presentation/screens/settings_screen.dart';
 import '../features/stats/presentation/screens/stats_screen.dart';
 
@@ -69,18 +76,12 @@ class AppShellScaffold extends StatelessWidget {
 
     return Scaffold(
       body: child,
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: StreaklyBottomNavBar(
         selectedIndex: tab.index,
-        onDestinationSelected: (index) {
+        onSelect: (index) {
           final next = AppTab.values[index];
           context.go(_locationForTab(next));
         },
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.today), label: 'Today'),
-          NavigationDestination(icon: Icon(Icons.view_list), label: 'Habits'),
-          NavigationDestination(icon: Icon(Icons.insights), label: 'Stats'),
-          NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
-        ],
       ),
     );
   }
@@ -111,6 +112,26 @@ GoRouter buildRouter({String initialLocation = AppRoutes.splash}) {
         path: AppRoutes.onboardingInsurance,
         builder: (context, state) => const OnboardingInsuranceScreen(),
       ),
+      GoRoute(
+        path: AppRoutes.habitNew,
+        builder: (context, state) => const HabitEditorScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.habitEdit,
+        builder: (context, state) {
+          final habit = state.extra;
+          if (habit is! Habit) return const HabitsScreen();
+          return HabitEditorScreen(existing: habit);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.streakRecovery,
+        builder: (context, state) {
+          final args = state.extra;
+          if (args is! StreakRecoveryArgs) return const TodayScreen();
+          return StreakRecoveryScreen(args: args);
+        },
+      ),
       ShellRoute(
         builder: (context, state, child) => AppShellScaffold(child: child),
         routes: [
@@ -123,6 +144,14 @@ GoRouter buildRouter({String initialLocation = AppRoutes.splash}) {
             builder: (context, state) => const HabitsScreen(),
           ),
           GoRoute(
+            path: AppRoutes.habitDetail,
+            builder: (context, state) {
+              final habit = state.extra;
+              if (habit is! Habit) return const HabitsScreen();
+              return HabitDetailScreen(habit: habit);
+            },
+          ),
+          GoRoute(
             path: AppRoutes.stats,
             builder: (context, state) => const StatsScreen(),
           ),
@@ -130,9 +159,16 @@ GoRouter buildRouter({String initialLocation = AppRoutes.splash}) {
             path: AppRoutes.settings,
             builder: (context, state) => const SettingsScreen(),
           ),
+          GoRoute(
+            path: AppRoutes.settingsNotifications,
+            builder: (context, state) => const NotificationsSettingsScreen(),
+          ),
+          GoRoute(
+            path: AppRoutes.settingsInsurance,
+            builder: (context, state) => const InsuranceSettingsScreen(),
+          ),
         ],
       ),
     ],
   );
 }
-

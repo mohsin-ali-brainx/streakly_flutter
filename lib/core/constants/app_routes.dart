@@ -9,6 +9,12 @@ abstract final class AppRoutes {
   static const onboardingInsurance = '/onboarding/insurance';
   static const today = '/today';
   static const habits = '/habits';
+  static const habitDetail = '/habits/detail';
+  static const habitNew = '/habits/new';
+  static const habitEdit = '/habits/edit';
+  static const streakRecovery = '/today/streak-recovery';
   static const stats = '/stats';
   static const settings = '/settings';
+  static const settingsNotifications = '/settings/notifications';
+  static const settingsInsurance = '/settings/insurance';
 }

@@ -9,6 +9,7 @@ abstract final class AppPrefsStorageKeys {
   static const notificationsEnabled = 'streakly_notifications_enabled';
   static const onboardingNotificationsStepCompleted =
       'streakly_onboarding_notifications_step_completed';
+  static const themeMode = 'streakly_theme_mode';
 
   /// Set after copying legacy SQLite `app_prefs` row (if any) once.
   static const migratedFromSqlitePrefs = 'streakly_migrated_sqlite_prefs_v1';

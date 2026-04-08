@@ -18,8 +18,11 @@ class OnboardingNotificationsController extends ChangeNotifier {
   bool _submitting = false;
   bool get submitting => _submitting;
 
-  Future<void> enable() async {
-    if (_submitting) return;
+  bool? _granted;
+  bool? get granted => _granted;
+
+  Future<bool> enable() async {
+    if (_submitting) return _granted ?? false;
     _submitting = true;
     notifyListeners();
     try {
@@ -27,6 +30,8 @@ class OnboardingNotificationsController extends ChangeNotifier {
       final granted = await _permissionService.requestPermission();
       await _prefsRepository.setNotificationsEnabled(granted);
       await _prefsRepository.setOnboardingNotificationsStepCompleted(true);
+      _granted = granted;
+      return granted;
     } finally {
       _submitting = false;
       notifyListeners();
@@ -45,6 +50,11 @@ class OnboardingNotificationsController extends ChangeNotifier {
       _submitting = false;
       notifyListeners();
     }
+  }
+
+  Future<void> openSettings() async {
+    if (_submitting) return;
+    await _permissionService.openAppSettings();
   }
 }
 

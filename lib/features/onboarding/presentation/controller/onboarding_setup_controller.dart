@@ -97,7 +97,9 @@ class OnboardingSetupController extends ChangeNotifier {
           name: t.title,
           iconKey: t.iconKey,
         );
-        await reminders.syncFromHabit(created);
+        try {
+          await reminders.syncFromHabit(created);
+        } catch (_) {}
       }
 
       await _prefsRepository.setStarterHabitsCreated(true);

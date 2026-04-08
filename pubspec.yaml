@@ -43,6 +43,7 @@ dependencies:
   intl: ^0.20.2
   flutter_svg: ^2.1.0
   google_fonts: ^6.2.1
+  permission_handler: ^11.3.1
 
   # Local storage
   sqflite: ^2.4.2
@@ -57,6 +58,8 @@ dependencies:
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -84,6 +87,19 @@ flutter:
   # App-local assets (always bundled; avoids package-asset edge cases on some builds).
   assets:
     - assets/icons/ic_welcome_stars.svg
+    - assets/icons/nav_today.svg
+    - assets/icons/nav_habits.svg
+    - assets/icons/nav_stats.svg
+    - assets/icons/nav_settings.svg
+    - assets/icons/anchor_sun.svg
+    - assets/icons/anchor_leaf.svg
+    - assets/icons/anchor_dumbbell.svg
+    - assets/icons/anchor_book.svg
+    - assets/icons/anchor_moon.svg
+    - assets/icons/anchor_runner.svg
+    - assets/icons/anchor_palette.svg
+    - assets/icons/anchor_brain.svg
+    - assets/icons/anchor_more.svg
 
   # Optional: package icons for other screens (see Flutter “assets from packages”).
   # - packages/streakly_assets/assets/icons/

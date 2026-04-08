@@ -56,6 +56,12 @@ class TodayController extends ChangeNotifier {
       _insuranceHabitId != null &&
       (_insuranceState?.eligibleForYesterday ?? false);
 
+  int? get insuranceStreakDays {
+    final id = _insuranceHabitId;
+    if (id == null) return null;
+    return _streaks[id]?.current;
+  }
+
   HabitDayStatus? statusForHabit(int habitId) {
     for (final s in _todayStatuses) {
       if (s.habitId == habitId) return s;
@@ -65,10 +71,21 @@ class TodayController extends ChangeNotifier {
 
   bool isDoneToday(int habitId) {
     final s = statusForHabit(habitId)?.status;
-    return s == HabitDayCompletionStatus.done;
+    return s == HabitDayCompletionStatus.done ||
+        s == HabitDayCompletionStatus.insured;
   }
 
   StreakSummary? streakFor(int habitId) => _streaks[habitId];
+
+  int get habitCount => _habits.length;
+
+  int get completedTodayCount {
+    var n = 0;
+    for (final h in _habits) {
+      if (isDoneToday(h.id)) n++;
+    }
+    return n;
+  }
 
   void start() {
     _habitsSub = _habitsRepository.watchActiveHabits().listen((list) {
@@ -122,13 +139,13 @@ class TodayController extends ChangeNotifier {
     }
   }
 
-  Future<void> applyInsurance() async {
+  Future<bool> applyInsurance() async {
     final id = _insuranceHabitId;
-    if (id == null || _insuranceBusy) return;
+    if (id == null || _insuranceBusy) return false;
     _insuranceBusy = true;
     notifyListeners();
     try {
-      await _useInsurance(habitId: id);
+      return await _useInsurance(habitId: id);
     } finally {
       _insuranceBusy = false;
       await _refreshStreaksAndInsurance();

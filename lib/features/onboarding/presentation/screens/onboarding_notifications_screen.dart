@@ -226,10 +226,71 @@ class _OnboardingNotificationsView extends StatelessWidget {
                                 height: 28 / 18,
                               ),
                               onPressed: () async {
-                                await c.enable();
+                                final granted = await c.enable();
                                 if (!context.mounted) return;
-                                context.go(
-                                  AppRoutes.onboardingInsurance,
+                                if (granted) {
+                                  context.go(AppRoutes.onboardingInsurance);
+                                  return;
+                                }
+
+                                await showDialog<void>(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text(
+                                        NotificationsStrings.deniedTitle,
+                                        style: GoogleFonts.plusJakartaSans(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.notificationsInk,
+                                        ),
+                                      ),
+                                      content: Text(
+                                        NotificationsStrings.deniedBody,
+                                        style: GoogleFonts.manrope(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.notificationsBody,
+                                          height: 1.35,
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () async {
+                                            await c.openSettings();
+                                            if (!context.mounted) return;
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(
+                                            NotificationsStrings.openSettings,
+                                            style: GoogleFonts.plusJakartaSans(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700,
+                                              color: AppColors
+                                                  .notificationsHeadlineAccent,
+                                            ),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            context.go(
+                                              AppRoutes.onboardingInsurance,
+                                            );
+                                          },
+                                          child: Text(
+                                            NotificationsStrings.continueAnyway,
+                                            style: GoogleFonts.plusJakartaSans(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w700,
+                                              color:
+                                                  AppColors.notificationsLater,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
                                 );
                               },
                             ),

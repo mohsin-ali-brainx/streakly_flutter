@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../di/service_locator.dart';
 import '../features/notifications/data/habit_reminder_scheduler.dart';
 import '../features/habits/domain/repositories/habits_repository.dart';
 import 'app_router.dart';
+import 'theme_mode_controller.dart';
 import '../ui/theme/app_theme.dart';
 
 class StreaklyApp extends StatefulWidget {
@@ -14,13 +16,29 @@ class StreaklyApp extends StatefulWidget {
   State<StreaklyApp> createState() => _StreaklyAppState();
 }
 
-class _StreaklyAppState extends State<StreaklyApp> {
+class _StreaklyAppState extends State<StreaklyApp> with WidgetsBindingObserver {
   late final GoRouter _router = buildRouter();
+  late final ThemeModeController _theme = sl<ThemeModeController>();
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) => _syncHabitReminders());
+    WidgetsBinding.instance.addPostFrameCallback((_) => _theme.load());
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _syncHabitReminders();
+    }
   }
 
   Future<void> _syncHabitReminders() async {
@@ -28,23 +46,26 @@ class _StreaklyAppState extends State<StreaklyApp> {
     try {
       final habits = await sl<HabitsRepository>().getActiveHabits();
       final scheduler = sl<HabitReminderScheduler>();
-      for (final h in habits) {
-        await scheduler.syncFromHabit(h);
-      }
-    } catch (_) {
-      // Non-fatal; reminders can be fixed from settings later.
-    }
+      await scheduler.syncAllActiveHabits(habits);
+    } catch (_) {}
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'Streakly',
-      theme: AppTheme.light(),
-      darkTheme: AppTheme.dark(),
-      themeMode: ThemeMode.system,
-      routerConfig: _router,
+    return ChangeNotifierProvider.value(
+      value: _theme,
+      child: Consumer<ThemeModeController>(
+        builder: (context, t, _) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            title: 'Streakly',
+            theme: AppTheme.light(),
+            darkTheme: AppTheme.dark(),
+            themeMode: t.mode,
+            routerConfig: _router,
+          );
+        },
+      ),
     );
   }
 }

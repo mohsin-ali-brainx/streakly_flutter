@@ -1,3 +1,5 @@
+// ignore_for_file: dangling_library_doc_comments
+
 /// Shared visual assets (icons, images, fonts) for Streakly.
 ///
 /// For [SvgPicture.asset] / [Image.asset] with `package:`, use [StreaklyIcons]
@@ -8,8 +10,6 @@
 /// - [StreaklyIcons], [StreaklyIconNames], [kStreaklyAssetsPackage]
 /// - [StreaklyImages], [StreaklyImageNames]
 /// - [StreaklyFonts]
-library streakly_assets;
-
 export 'src/asset_paths.dart';
 export 'icons.dart';
 export 'images.dart';

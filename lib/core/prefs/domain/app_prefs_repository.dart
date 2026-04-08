@@ -17,5 +17,8 @@ abstract class AppPrefsRepository {
 
   Future<bool> onboardingNotificationsStepCompleted();
   Future<void> setOnboardingNotificationsStepCompleted(bool value);
+
+  Future<String> themeMode();
+  Future<void> setThemeMode(String value);
 }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_dimens.dart';
 import '../../../../core/l10n/app_strings.dart';
 import '../../../../di/service_locator.dart';
@@ -7,7 +9,7 @@ import '../../../notifications/data/habit_reminder_scheduler.dart';
 import '../../../notifications/domain/notifications_permission_service.dart';
 import '../../domain/entities/habit.dart';
 import '../../domain/repositories/habits_repository.dart';
-import 'habit_emoji_badge.dart';
+import 'habit_icon.dart';
 
 /// Keys that match [HabitEmojiBadge.emojiForKey].
 const List<String> kHabitEditorIconKeys = [
@@ -29,8 +31,8 @@ class HabitEditorSheet extends StatefulWidget {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
-      showDragHandle: true,
-      builder: (context) => HabitEditorSheet(existing: existing),
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => HabitEditorSheet(existing: existing),
     );
   }
 
@@ -100,7 +102,9 @@ class _HabitEditorSheetState extends State<HabitEditorSheet> {
           archived: prev.archived,
         );
         await _habits.updateHabit(h);
-        await _reminders.syncFromHabit(h);
+        try {
+          await _reminders.syncFromHabit(h);
+        } catch (_) {}
       } else {
         final created = await _habits.createHabit(
           name: name,
@@ -108,7 +112,9 @@ class _HabitEditorSheetState extends State<HabitEditorSheet> {
           reminderEnabled: _reminderEnabled,
           reminderTimeMinutes: _reminderEnabled ? minutes : null,
         );
-        await _reminders.syncFromHabit(created);
+        try {
+          await _reminders.syncFromHabit(created);
+        } catch (_) {}
       }
       if (mounted) Navigator.of(context).pop();
     } finally {
@@ -148,108 +154,276 @@ class _HabitEditorSheetState extends State<HabitEditorSheet> {
     }
   }
 
+  Widget _sectionLabel(String text) {
+    return Text(
+      text.toUpperCase(),
+      style: GoogleFonts.manrope(
+        fontSize: 10,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 0.8,
+        height: 1.5,
+        color: AppColors.habitsMuted,
+      ),
+    );
+  }
+
+  Widget _iconOption(String key) {
+    final sel = _iconKey == key;
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () => setState(() => _iconKey = key),
+        customBorder: const CircleBorder(),
+        child: Ink(
+          width: 52,
+          height: 52,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: sel
+                ? AppColors.habitsIconWellFill
+                : AppColors.habitsCardTint,
+            border: Border.all(
+              color: sel ? AppColors.habitsPrimaryCta : Colors.transparent,
+              width: 2,
+            ),
+          ),
+          child: Center(
+            child: HabitIcon(
+              iconKey: key,
+              size: 22,
+              color: AppColors.habitsTitleInk,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
     final bottomInset = MediaQuery.viewInsetsOf(context).bottom;
 
-    return Padding(
-      padding: EdgeInsets.only(bottom: bottomInset),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(
-          AppDimens.space2xl,
-          0,
-          AppDimens.space2xl,
-          AppDimens.space2xl,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              _isEdit ? HabitsStrings.editTitle : HabitsStrings.addTitle,
-              style: textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            const SizedBox(height: AppDimens.space2xl),
-            TextField(
-              controller: _nameController,
-              textCapitalization: TextCapitalization.sentences,
-              decoration: InputDecoration(
-                labelText: HabitsStrings.nameLabel,
-                border: const OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: AppDimens.space2xl),
-            Text(
-              HabitsStrings.iconLabel,
-              style: textTheme.labelLarge?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(height: AppDimens.spaceSm),
-            Wrap(
-              spacing: AppDimens.spaceSm,
-              runSpacing: AppDimens.spaceSm,
-              children: [
-                for (final key in kHabitEditorIconKeys)
-                  ChoiceChip(
-                    label: HabitEmojiBadge(iconKey: key, size: 22),
-                    selected: _iconKey == key,
-                    onSelected: (_) => setState(() => _iconKey = key),
+    return DecoratedBox(
+      decoration: const BoxDecoration(
+        color: AppColors.habitsScreenBg,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+        boxShadow: [
+          BoxShadow(
+            color: Color(0x1A85736D),
+            blurRadius: 40,
+            offset: Offset(0, -8),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(bottom: bottomInset),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(
+            AppDimens.pagePaddingHLoose,
+            12,
+            AppDimens.pagePaddingHLoose,
+            AppDimens.space4xl + 8,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD8C2BB),
+                    borderRadius: BorderRadius.circular(999),
                   ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                _isEdit ? HabitsStrings.editTitle : HabitsStrings.addTitle,
+                style: GoogleFonts.plusJakartaSans(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                  height: 1.2,
+                  letterSpacing: -0.5,
+                  color: AppColors.habitsTitleInk,
+                ),
+              ),
+              const SizedBox(height: 24),
+              _sectionLabel(HabitsStrings.sectionHabitName),
+              const SizedBox(height: 10),
+              TextField(
+                controller: _nameController,
+                textCapitalization: TextCapitalization.sentences,
+                style: GoogleFonts.manrope(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.habitsTitleInk,
+                ),
+                decoration: InputDecoration(
+                  hintText: HabitsStrings.nameHint,
+                  hintStyle: GoogleFonts.manrope(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.habitsMuted.withValues(alpha: 0.65),
+                  ),
+                  filled: true,
+                  fillColor: AppColors.habitsCardTint,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 18,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              _sectionLabel(HabitsStrings.sectionIcon),
+              const SizedBox(height: 12),
+              Wrap(
+                spacing: 12,
+                runSpacing: 12,
+                children: [
+                  for (final key in kHabitEditorIconKeys) _iconOption(key),
+                ],
+              ),
+              const SizedBox(height: 24),
+              _sectionLabel(HabitsStrings.sectionReminder),
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.all(18),
+                decoration: BoxDecoration(
+                  color: AppColors.habitsCardTint,
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                HabitsStrings.reminderSwitch,
+                                style: GoogleFonts.manrope(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.habitsTitleInk,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                _reminderEnabled
+                                    ? _reminderTime.format(context)
+                                    : HabitsStrings.reminderOff,
+                                style: GoogleFonts.manrope(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.habitsMuted,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Switch.adaptive(
+                          value: _reminderEnabled,
+                          activeColor: AppColors.habitsPrimaryCta,
+                          activeTrackColor:
+                              AppColors.habitsPrimaryCta.withValues(alpha: 0.35),
+                          onChanged: (v) => setState(() => _reminderEnabled = v),
+                        ),
+                      ],
+                    ),
+                    if (_reminderEnabled) ...[
+                      const SizedBox(height: 12),
+                      TextButton.icon(
+                        onPressed: _pickTime,
+                        icon: Icon(
+                          Icons.schedule_rounded,
+                          size: 20,
+                          color: AppColors.habitsPrimaryCta,
+                        ),
+                        label: Text(
+                          HabitsStrings.pickTime,
+                          style: GoogleFonts.manrope(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                            color: AppColors.habitsPrimaryCta,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+              const SizedBox(height: 28),
+              SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: FilledButton(
+                  onPressed: _saving ? null : _save,
+                  style: FilledButton.styleFrom(
+                    backgroundColor: AppColors.habitsPrimaryCta,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    disabledBackgroundColor:
+                        AppColors.habitsPrimaryCta.withValues(alpha: 0.5),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    textStyle: GoogleFonts.manrope(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                    ),
+                  ),
+                  child: _saving
+                      ? const SizedBox(
+                          width: 22,
+                          height: 22,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
+                      : Text(HabitsStrings.save),
+                ),
+              ),
+              if (_isEdit) ...[
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: TextButton(
+                    onPressed: _saving ? null : _archive,
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppColors.habitsArchiveInk,
+                      textStyle: GoogleFonts.manrope(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 16,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.inventory_2_outlined,
+                          size: 18,
+                          color: AppColors.habitsArchiveInk,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(HabitsStrings.archiveHabit),
+                      ],
+                    ),
+                  ),
+                ),
               ],
-            ),
-            const SizedBox(height: AppDimens.space2xl),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(HabitsStrings.reminderSwitch),
-              subtitle: Text(
-                _reminderEnabled
-                    ? _reminderTime.format(context)
-                    : HabitsStrings.reminderOff,
-                style: textTheme.bodySmall?.copyWith(
-                  color: cs.onSurfaceVariant,
-                ),
-              ),
-              value: _reminderEnabled,
-              onChanged: (v) => setState(() => _reminderEnabled = v),
-            ),
-            if (_reminderEnabled) ...[
-              const SizedBox(height: AppDimens.spaceSm),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: TextButton.icon(
-                  onPressed: _pickTime,
-                  icon: const Icon(Icons.schedule),
-                  label: Text(HabitsStrings.pickTime),
-                ),
-              ),
             ],
-            const SizedBox(height: AppDimens.space3xl),
-            FilledButton(
-              onPressed: _saving ? null : _save,
-              child: _saving
-                  ? const SizedBox(
-                      width: 22,
-                      height: 22,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
-                  : Text(HabitsStrings.save),
-            ),
-            if (_isEdit) ...[
-              const SizedBox(height: AppDimens.spaceLg),
-              TextButton(
-                onPressed: _saving ? null : _archive,
-                child: Text(
-                  HabitsStrings.archiveHabit,
-                  style: TextStyle(color: cs.error),
-                ),
-              ),
-            ],
-          ],
+          ),
         ),
       ),
     );

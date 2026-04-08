@@ -15,6 +15,16 @@ class HabitEmojiBadge extends StatelessWidget {
       'walk' => '🚶',
       'journal' => '✍️',
       'custom' => '✨',
+      'sun' => '☀️',
+      'leaf' => '🌿',
+      'dumbbell' => '🏋️',
+      'book' => '📖',
+      'moon' => '🌙',
+      'luna' => '🌙',
+      'runner' => '🏃',
+      'palette' => '🎨',
+      'brain' => '🧠',
+      'more' => '⋯',
       _ => '✨',
     };
   }
