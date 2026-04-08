@@ -180,9 +180,9 @@ class _LeadingWell extends StatelessWidget {
                   ? const Icon(
                       Icons.check_rounded,
                       color: Colors.white,
-                      size: 26,
+                      size: 36,
                     )
-                  : HabitIcon(iconKey: iconKey, size: 22),
+                  : HabitIcon(iconKey: iconKey, size: 32),
             ),
           ),
         ),

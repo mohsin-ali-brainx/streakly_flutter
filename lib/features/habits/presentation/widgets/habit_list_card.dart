@@ -71,7 +71,7 @@ class HabitListCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(32),
                   ),
                   alignment: Alignment.center,
-                  child: HabitIcon(iconKey: habit.iconKey, size: 24),
+                  child: HabitIcon(iconKey: habit.iconKey, size: 32),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -105,7 +105,7 @@ class HabitListCard extends StatelessWidget {
                 Icon(
                   Icons.chevron_right_rounded,
                   color: AppColors.habitsMuted.withValues(alpha: 0.45),
-                  size: 28,
+                  size: 32,
                 ),
               ],
             ),

@@ -132,9 +132,9 @@ class _HabitEditorScreenState extends State<HabitEditorScreen> {
     return Text(
       text.toUpperCase(),
       style: GoogleFonts.manrope(
-        fontSize: 10,
+        fontSize: 13,
         fontWeight: FontWeight.w700,
-        letterSpacing: 0.9,
+        letterSpacing: 1.08,
         color: AppColors.habitsMuted,
       ),
     );
@@ -161,16 +161,16 @@ class _HabitEditorScreenState extends State<HabitEditorScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: 26,
-              height: 26,
+              width: 40,
+              height: 40,
               decoration: BoxDecoration(
                 color: AppColors.habitsCardTint,
-                borderRadius: BorderRadius.circular(13),
+                borderRadius: BorderRadius.circular(50),
               ),
               alignment: Alignment.center,
               child: HabitIcon(
                 iconKey: t.iconKey,
-                size: 16,
+                size: 28,
                 color: AppColors.habitsTitleInk,
               ),
             ),
@@ -198,7 +198,7 @@ class _HabitEditorScreenState extends State<HabitEditorScreen> {
     return Text(
       HabitsStrings.visualAnchor.toUpperCase(),
       style: GoogleFonts.manrope(
-        fontSize: 10,
+        fontSize: 13,
         fontWeight: FontWeight.w700,
         letterSpacing: 1.05,
         color: AppColors.visualAnchorIconBrown,
@@ -224,8 +224,8 @@ class _HabitEditorScreenState extends State<HabitEditorScreen> {
         alignment: Alignment.center,
         child: SvgPicture.asset(
           _anchorSvgPath(key),
-          width: 22,
-          height: 22,
+          width: 30,
+          height: 30,
           colorFilter: ColorFilter.mode(
             selected ? Colors.white : AppColors.visualAnchorIconBrown,
             BlendMode.srcIn,
@@ -240,36 +240,42 @@ class _HabitEditorScreenState extends State<HabitEditorScreen> {
     final tod = TimeOfDay(hour: minutes ~/ 60, minute: minutes % 60);
     final label = minutes < 12 * 60 ? 'MORNING' : minutes < 18 * 60 ? 'NOON' : 'EVENING';
     return Expanded(
-      child: InkWell(
+      child: Container(decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22),
-        onTap: () => setState(() => _reminderTime = tod),
-        child: Ink(
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          decoration: BoxDecoration(
-            color: selected ? AppColors.todayTealDone : Colors.white.withValues(alpha: 0.9),
-            borderRadius: BorderRadius.circular(22),
-          ),
-          child: Column(
-            children: [
-              Text(
-                label,
-                style: GoogleFonts.manrope(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: 0.8,
-                  color: selected ? Colors.white70 : AppColors.habitsMuted,
+        color: selected
+            ? AppColors.visualAnchorSelected
+            : AppColors.visualAnchorInactiveWell,
+        ),
+        child: InkWell(
+          onTap: () => setState(() => _reminderTime = tod),
+          child: Ink(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            decoration: BoxDecoration(
+              color: selected ? AppColors.todayTealDone : Colors.white.withValues(alpha: 0.9),
+              borderRadius: BorderRadius.circular(22),
+            ),
+            child: Column(
+              children: [
+                Text(
+                  label,
+                  style: GoogleFonts.manrope(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: 0.8,
+                    color: selected ? Colors.white70 : AppColors.habitsMuted,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                tod.format(context),
-                style: GoogleFonts.plusJakartaSans(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: selected ? Colors.white : AppColors.habitsTitleInk,
+                const SizedBox(height: 4),
+                Text(
+                  tod.format(context),
+                  style: GoogleFonts.plusJakartaSans(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    color: selected ? Colors.white : AppColors.habitsTitleInk,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

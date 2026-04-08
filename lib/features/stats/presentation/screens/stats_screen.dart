@@ -136,7 +136,7 @@ class _StatsScaffold extends StatelessWidget {
                         Text(
                           StatsStrings.eyebrow,
                           style: GoogleFonts.manrope(
-                            fontSize: 10,
+                            fontSize: 12,
                             fontWeight: FontWeight.w700,
                             letterSpacing: 1.0,
                             color: AppColors.habitsMuted,
@@ -157,7 +157,7 @@ class _StatsScaffold extends StatelessWidget {
                         Text(
                           StatsStrings.subtitle,
                           style: GoogleFonts.manrope(
-                            fontSize: 15,
+                            fontSize: 16,
                             fontWeight: FontWeight.w500,
                             height: 1.45,
                             color: AppColors.habitsBodyBrown,
@@ -200,7 +200,7 @@ class _TotalCheckInsCard extends StatelessWidget {
 
   final int value;
 
-  static const _radius = 48.0;
+  static const _radius = 20.0;
 
   @override
   Widget build(BuildContext context) {
@@ -224,14 +224,14 @@ class _TotalCheckInsCard extends StatelessWidget {
             children: [
               Icon(
                 Icons.check_circle_outline_rounded,
-                size: 20,
+                size: 26,
                 color: AppColors.habitsPrimaryCta,
               ),
               const SizedBox(width: 10),
               Text(
                 StatsStrings.totalCheckIns,
                 style: GoogleFonts.manrope(
-                  fontSize: 10,
+                  fontSize: 14,
                   fontWeight: FontWeight.w700,
                   letterSpacing: 0.9,
                   color: AppColors.habitsMuted,
@@ -261,7 +261,7 @@ class _LongestStreakCard extends StatelessWidget {
 
   final int days;
 
-  static const _radius = 48.0;
+  static const _radius = 20.0;
 
   @override
   Widget build(BuildContext context) {
@@ -279,11 +279,12 @@ class _LongestStreakCard extends StatelessWidget {
         ],
       ),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.local_fire_department_rounded,
             color: Color(0xFFFFB74D),
-            size: 18,
+            size: 26,
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -293,7 +294,7 @@ class _LongestStreakCard extends StatelessWidget {
                 Text(
                   StatsStrings.longestStreak,
                   style: GoogleFonts.manrope(
-                    fontSize: 10,
+                    fontSize: 14,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0.9,
                     color: Colors.white70,
@@ -339,7 +340,7 @@ class _StreaksPreservedCard extends StatelessWidget {
 
   final int value;
 
-  static const _radius = 48.0;
+  static const _radius = 20.0;
 
   @override
   Widget build(BuildContext context) {
@@ -359,14 +360,14 @@ class _StreaksPreservedCard extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.shield_rounded,
-                      size: 16,
+                      size: 24,
                       color: AppColors.todayTealDone,
                     ),
                     const SizedBox(width: 10),
                     Text(
                       StatsStrings.streaksPreserved,
                       style: GoogleFonts.manrope(
-                        fontSize: 10,
+                        fontSize: 14,
                         fontWeight: FontWeight.w700,
                         letterSpacing: 0.9,
                         color: AppColors.habitsMuted,
@@ -406,7 +407,7 @@ class _WeeklyOverviewCard extends StatelessWidget {
   final List<int> dayTotals;
 
   static final _df = DateFormat('EEE, MMM d');
-  static const _radius = 48.0;
+  static const _radius = 20.0;
 
   @override
   Widget build(BuildContext context) {
@@ -449,7 +450,7 @@ class _WeeklyOverviewCard extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 2),
                 child: Icon(
                   Icons.eco_rounded,
-                  size: 22,
+                  size: 32,
                   color: AppColors.ctaBrown,
                 ),
               ),
@@ -461,7 +462,7 @@ class _WeeklyOverviewCard extends StatelessWidget {
                     Text(
                       StatsStrings.weeklyOverview,
                       style: GoogleFonts.plusJakartaSans(
-                        fontSize: 17,
+                        fontSize: 18,
                         fontWeight: FontWeight.w800,
                         color: AppColors.habitsTitleInk,
                       ),
@@ -470,7 +471,7 @@ class _WeeklyOverviewCard extends StatelessWidget {
                     Text(
                       range,
                       style: GoogleFonts.manrope(
-                        fontSize: 12,
+                        fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: AppColors.habitsMuted,
                       ),
@@ -562,7 +563,7 @@ class _HabitDiversityCard extends StatelessWidget {
 
   final List<StatsDiversityRow> rows;
 
-  static const _radius = 48.0;
+  static const _radius = 20.0;
 
   @override
   Widget build(BuildContext context) {
@@ -636,7 +637,7 @@ class _ConsistencyScoreCard extends StatelessWidget {
 
   final int percent;
 
-  static const _radius = 48.0;
+  static const _radius = 20.0;
 
   String _body() {
     if (percent >= 85) return StatsStrings.consistencyHighBody(percent);

@@ -14,7 +14,7 @@ class StreaklyBottomNavBar extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onSelect;
 
-  static const double _iconBox = 24;
+  static const double _iconBox = 30;
 
   @override
   Widget build(BuildContext context) {
