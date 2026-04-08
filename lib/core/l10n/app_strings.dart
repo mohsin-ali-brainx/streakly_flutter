@@ -257,7 +257,5 @@ abstract final class SettingsStrings {
   static const insuranceTitle = 'Streak Insurance';
   static const insuranceSubtitle = '2 tokens/month • covers yesterday only';
   static const system = 'System';
-  static const light = 'Light';
-  static const dark = 'Dark';
   static const tokensPlaceholder = '2/2';
 }

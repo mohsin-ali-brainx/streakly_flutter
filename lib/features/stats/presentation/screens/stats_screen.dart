@@ -32,12 +32,13 @@ class _StatsScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cs = Theme.of(context).colorScheme;
     return Consumer<StatsController>(
       builder: (context, c, _) {
         return Scaffold(
-          backgroundColor: AppColors.habitsScreenBg,
+          backgroundColor: cs.surface,
           drawer: Drawer(
-            backgroundColor: AppColors.habitsScreenBg,
+            backgroundColor: cs.surface,
             child: SafeArea(
               child: ListView(
                 padding: EdgeInsets.zero,
@@ -45,9 +46,7 @@ class _StatsScaffold extends StatelessWidget {
                   DrawerHeader(
                     margin: EdgeInsets.zero,
                     padding: const EdgeInsets.fromLTRB(20, 16, 16, 16),
-                    decoration: const BoxDecoration(
-                      color: AppColors.habitsCardTint,
-                    ),
+                    decoration: BoxDecoration(color: cs.surfaceContainerHighest),
                     child: Align(
                       alignment: Alignment.bottomLeft,
                       child: Text(

@@ -74,7 +74,9 @@ class _FakeInsuranceRepo implements InsuranceRepository {
   @override
   Future<int> getTotalTokensConsumed() async {
     var n = 0;
-    for (final v in _used.values) n += v;
+    for (final v in _used.values) {
+      n += v;
+    }
     return n;
   }
 }

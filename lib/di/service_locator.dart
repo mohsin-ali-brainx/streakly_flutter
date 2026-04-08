@@ -18,7 +18,6 @@ import '../features/notifications/data/habit_reminder_scheduler.dart';
 import '../features/notifications/data/permission_handler_notifications_permission_service.dart';
 import '../features/notifications/domain/notifications_permission_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import '../app/theme_mode_controller.dart';
 
 final GetIt sl = GetIt.instance;
 
@@ -36,8 +35,6 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton<AppPrefsRepository>(
     () => SharedPrefsAppPrefsRepository(sl()),
   );
-
-  sl.registerSingleton<ThemeModeController>(ThemeModeController(sl()));
 
   sl.registerLazySingleton<HabitsRepository>(() => SqliteHabitsRepository(sl()));
   sl.registerLazySingleton<HabitStatusRepository>(

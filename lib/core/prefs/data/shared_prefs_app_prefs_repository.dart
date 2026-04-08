@@ -71,13 +71,4 @@ class SharedPrefsAppPrefsRepository implements AppPrefsRepository {
       value,
     );
   }
-
-  @override
-  Future<String> themeMode() async =>
-      _prefs.getString(AppPrefsStorageKeys.themeMode) ?? 'system';
-
-  @override
-  Future<void> setThemeMode(String value) async {
-    await _prefs.setString(AppPrefsStorageKeys.themeMode, value);
-  }
 }

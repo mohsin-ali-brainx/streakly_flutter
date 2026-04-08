@@ -82,8 +82,8 @@ class _NavIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return SvgPicture.asset(
       asset,
-      width: 22,
-      height: 22,
+      width: 40,
+      height: 40,
       colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
     );
   }
@@ -110,13 +110,13 @@ class _Item extends StatelessWidget {
     return Expanded(
       child: Material(
         color: Colors.transparent,
-        child: InkWell(
+        child: GestureDetector(
           onTap: onTap,
-          splashColor: AppColors.habitsIconWellFill,
-          highlightColor: Colors.transparent,
-          borderRadius: BorderRadius.circular(16),
+          // splashColor: AppColors.habitsIconWellFill,
+          // highlightColor: Colors.transparent,
+          // borderRadius: BorderRadius.circular(16),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 6),
+            padding: const EdgeInsets.symmetric(vertical: 4),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -125,16 +125,16 @@ class _Item extends StatelessWidget {
                   height: StreaklyBottomNavBar._iconBox,
                   child: Center(child: icon(c)),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: 4),
                 Text(
                   label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: GoogleFonts.manrope(
-                    fontSize: 10,
+                    fontSize: 12,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 0.8,
-                    height: 1.2,
+                    height: 1,
                     color: c,
                   ),
                 ),
