@@ -12,14 +12,7 @@ class TodayDashboardHeader extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(0, 4, 8, 12),
       child: Row(
         children: [
-          IconButton(
-            icon: Icon(
-              Icons.menu_rounded,
-              color: AppColors.habitsTitleInk,
-              size: 26,
-            ),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
+          const SizedBox(width: 48),
           const Expanded(
             child: Center(child: _StreaklyLogoWordmark()),
           ),

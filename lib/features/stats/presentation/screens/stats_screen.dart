@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_dimens.dart';
-import '../../../../core/constants/app_routes.dart';
 import '../../../../core/l10n/app_strings.dart';
 import '../../../habits/presentation/widgets/today_dashboard_header.dart';
 import '../controller/stats_controller.dart';
@@ -37,43 +35,6 @@ class _StatsScaffold extends StatelessWidget {
       builder: (context, c, _) {
         return Scaffold(
           backgroundColor: cs.surface,
-          drawer: Drawer(
-            backgroundColor: cs.surface,
-            child: SafeArea(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  DrawerHeader(
-                    margin: EdgeInsets.zero,
-                    padding: const EdgeInsets.fromLTRB(20, 16, 16, 16),
-                    decoration: BoxDecoration(color: cs.surfaceContainerHighest),
-                    child: Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        AppStrings.appName,
-                        style: GoogleFonts.plusJakartaSans(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.ctaBrown,
-                        ),
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.settings_outlined),
-                    title: Text(
-                      SettingsStrings.title,
-                      style: GoogleFonts.manrope(fontWeight: FontWeight.w600),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      context.go(AppRoutes.settings);
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
           body: SafeArea(
             bottom: false,
             child: CustomScrollView(

@@ -79,45 +79,6 @@ class _TodayScaffold extends StatelessWidget {
     return Scaffold(
       primary: false,
       backgroundColor: AppColors.todayScreenBg,
-      drawer: Drawer(
-        backgroundColor: AppColors.habitsScreenBg,
-        child: SafeArea(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: [
-              DrawerHeader(
-                margin: EdgeInsets.zero,
-                padding: const EdgeInsets.fromLTRB(20, 16, 16, 16),
-                decoration: const BoxDecoration(
-                  color: AppColors.habitsCardTint,
-                ),
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Text(
-                    AppStrings.appName,
-                    style: GoogleFonts.plusJakartaSans(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.ctaBrown,
-                    ),
-                  ),
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.settings_outlined),
-                title: Text(
-                  SettingsStrings.title,
-                  style: GoogleFonts.manrope(fontWeight: FontWeight.w600),
-                ),
-                onTap: () {
-                  Navigator.of(context).pop();
-                  context.go(AppRoutes.settings);
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push(AppRoutes.habitNew),
         backgroundColor: AppColors.habitsPrimaryCta,
